@@ -129,17 +129,23 @@ func (n *nessusImpl) Request(method string, resource string, js interface{}, wan
 		return nil, err
 	}
 	u.Path = resource
-	urlStr := fmt.Sprintf("%v", u)
 
-	jb, err := json.Marshal(js)
+	var req *http.Request
+	if js != nil {
+		jb, err := json.Marshal(js)
+		if err != nil {
+			return nil, err
+		}
+		req, err = http.NewRequest(method, u.String(), bytes.NewBufferString(string(jb)))
+	} else {
+		req, err = http.NewRequest(method, u.String(), http.NoBody)
+	}
 	if err != nil {
 		return nil, err
 	}
-	req, err := http.NewRequest(method, urlStr, bytes.NewBufferString(string(jb)))
-	if err != nil {
-		return nil, err
+	if method == "POST" || method == "PUT" {
+		req.Header.Add("Content-Type", "application/json")
 	}
-	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Accept", "application/json")
 	if n.authCookie != "" {
 		req.Header.Add("X-Cookie", fmt.Sprintf("token=%s", n.authCookie))
