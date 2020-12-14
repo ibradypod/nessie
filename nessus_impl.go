@@ -692,12 +692,15 @@ func (n *nessusImpl) DeleteScan(scanID int64) error {
 	return err
 }
 
-func (n *nessusImpl) ScanDetails(scanID int64) (*ScanDetailsResp, error) {
+func (n *nessusImpl) ScanDetails(scanID int64, args url.Values) (*ScanDetailsResp, error) {
 	if n.verbose {
 		logrus.Debug("Getting details about a scan...")
 	}
-
-	resp, err := n.Request("GET", fmt.Sprintf("/scans/%d", scanID), nil, []int{http.StatusOK})
+	uri := fmt.Sprintf("/scans/%d", scanID)
+	if len(args) > 0 {
+		uri += "?" + args.Encode()
+	}
+	resp, err := n.Request("GET", uri, nil, []int{http.StatusOK})
 	if err != nil {
 		return nil, err
 	}

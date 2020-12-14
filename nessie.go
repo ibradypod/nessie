@@ -3,6 +3,7 @@ package nessie
 
 import (
 	"net/http"
+	"net/url"
 )
 
 // Nessus exposes the resources offered via the Tenable Nessus RESTful API.
@@ -48,7 +49,7 @@ type Nessus interface {
 	ResumeScan(scanID int64) error
 	StopScan(scanID int64) error
 	DeleteScan(scanID int64) error
-	ScanDetails(scanID int64) (*ScanDetailsResp, error)
+	ScanDetails(scanID int64, args url.Values) (*ScanDetailsResp, error)
 	ConfigureScan(scanID int64, scanSetting NewScanRequest) (*Scan, error)
 
 	Timezones() ([]TimeZone, error)
