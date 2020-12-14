@@ -110,6 +110,46 @@ type ScanDetailsResp struct {
 	Filters           []Filter            `json:"filters"`
 }
 
+type HostScanDetailsResp struct {
+	Info struct {
+		HostStart       string `json:"host_start"`
+		MacAddress      string `json:"mac-address"`
+		HostFqdn        bool   `json:"host-fqdn"`
+		HostEnd         bool   `json:"host_end"`
+		OperatingSystem int64  `json:"operating-system"`
+		HostIp          int64  `json:"host-ip"`
+	} `json:"info"`
+	Vulnerabilities []HostVulnerability `json:"vulnerabilities"`
+}
+
+type ScanPluginOutput struct {
+	Output []PluginOutput `json:"output"`
+	Info   struct {
+		PluginDescription struct {
+			Severity         int    `json:"severity"`
+			PluginName       string `json:"pluginname"`
+			PluginFamily     string `json:"pluginfamily"`
+			PluginID         int64  `json:"pluginid"`
+			PluginAttributes struct {
+				RiskInformation struct {
+					RiskFactor string `json:"risk_factor"`
+				} `json:"risk_information"`
+				PluginName        string `json:"plugin_name"`
+				PluginInformation struct {
+					PluginID               int64  `json:"plugin_id"`
+					PluginType             string `json:"plugin_type"`
+					PluginFamily           string `json:"plugin_family"`
+					PluginModificationDate string `json:"plugin_modification_date"`
+				}
+				Solution    string `json:"solution"`
+				FName       string `json:"fname"`
+				Synopsis    string `json:"synopsis"`
+				Description string `json:"description"`
+			} `json:"pluginattributes"`
+		} `json:"plugindescription"`
+	} `json:"info"`
+}
+
 type tzResp struct {
 	Timezones []TimeZone `json:"timezones"`
 }

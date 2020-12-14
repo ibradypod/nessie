@@ -698,16 +698,11 @@ func (n *nessusImpl) DeleteScan(scanID int64) error {
 	return err
 }
 
-func (n *nessusImpl) ScanDetails(scanID int64, hostID int64, args url.Values) (*ScanDetailsResp, error) {
+func (n *nessusImpl) ScanDetails(scanID int64, args url.Values) (*ScanDetailsResp, error) {
 	if n.verbose {
 		logrus.Debug("Getting details about a scan...")
 	}
-	var uri string
-	if hostID > 0 {
-		uri = fmt.Sprintf("/scans/%d", scanID)
-	} else {
-		uri = fmt.Sprintf("/scans/%d/hosts/%d", scanID, hostID)
-	}
+	var uri = fmt.Sprintf("/scans/%d", scanID)
 	if len(args) > 0 {
 		uri += "?" + args.Encode()
 	}
@@ -717,6 +712,43 @@ func (n *nessusImpl) ScanDetails(scanID int64, hostID int64, args url.Values) (*
 	}
 	defer resp.Body.Close()
 	reply := &ScanDetailsResp{}
+	if err = json.NewDecoder(resp.Body).Decode(&reply); err != nil {
+		return nil, err
+	}
+	return reply, nil
+}
+
+func (n *nessusImpl) HostScanDetails(scanID int64, hostID int64, args url.Values) (*HostScanDetailsResp, error) {
+	if n.verbose {
+		logrus.Debug("Getting host details about a scan...")
+	}
+	var uri = fmt.Sprintf("/scans/%d/hosts/%d", scanID, hostID)
+	if len(args) > 0 {
+		uri += "?" + args.Encode()
+	}
+	resp, err := n.Request("GET", uri, nil, []int{http.StatusOK})
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	reply := &HostScanDetailsResp{}
+	if err = json.NewDecoder(resp.Body).Decode(&reply); err != nil {
+		return nil, err
+	}
+	return reply, nil
+}
+
+func (n *nessusImpl) ScanPluginOutput(scanID int64, hostID int64, pluginID int64) (*ScanPluginOutput, error) {
+	if n.verbose {
+		logrus.Debug("Getting plugin output about a scan...")
+	}
+	var uri = fmt.Sprintf("/scans/%d/hosts/%d/plugins/%d", scanID, hostID, pluginID)
+	resp, err := n.Request("GET", uri, nil, []int{http.StatusOK})
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	reply := &ScanPluginOutput{}
 	if err = json.NewDecoder(resp.Body).Decode(&reply); err != nil {
 		return nil, err
 	}

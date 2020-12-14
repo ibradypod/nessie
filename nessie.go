@@ -49,7 +49,9 @@ type Nessus interface {
 	ResumeScan(scanID int64) error
 	StopScan(scanID int64) error
 	DeleteScan(scanID int64) error
-	ScanDetails(scanID int64, hostID int64, args url.Values) (*ScanDetailsResp, error)
+	ScanDetails(scanID int64, args url.Values) (*ScanDetailsResp, error)
+	HostScanDetails(scanID int64, hostID int64, args url.Values) (*HostScanDetailsResp, error)
+	ScanPluginOutput(scanID int64, hostID int64, pluginID int64) (*ScanPluginOutput, error)
 	ConfigureScan(scanID int64, scanSetting NewScanRequest) (*Scan, error)
 
 	Timezones() ([]TimeZone, error)

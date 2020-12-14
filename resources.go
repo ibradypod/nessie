@@ -275,10 +275,10 @@ type HostCompliance struct {
 }
 
 type PluginOutput struct {
-	PluginOutput string   `json:"plugin_output"`
-	Hosts        string   `json:"hosts"`
-	Severity     int64    `json:"severity"`
-	Ports        []string `json:"ports"`
+	PluginOutput string                 `json:"plugin_output"`
+	Hosts        string                 `json:"hosts"`
+	Severity     int64                  `json:"severity"`
+	Ports        map[string]interface{} `json:"ports"`
 }
 
 type TimeZone struct {
