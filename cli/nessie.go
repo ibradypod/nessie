@@ -49,7 +49,7 @@ func main() {
 		panic(err)
 	}
 	for {
-		details, err := nessus.ScanDetails(scanID)
+		details, err := nessus.ScanDetails(scanID, -1, nil)
 		if err != nil {
 			panic(err)
 		}
