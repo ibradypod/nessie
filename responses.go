@@ -114,10 +114,10 @@ type HostScanDetailsResp struct {
 	Info struct {
 		HostStart       string `json:"host_start"`
 		MacAddress      string `json:"mac-address"`
-		HostFqdn        bool   `json:"host-fqdn"`
-		HostEnd         bool   `json:"host_end"`
-		OperatingSystem int64  `json:"operating-system"`
-		HostIp          int64  `json:"host-ip"`
+		HostFqdn        string `json:"host-fqdn"`
+		HostEnd         string `json:"host_end"`
+		OperatingSystem string `json:"operating-system"`
+		HostIp          string `json:"host-ip"`
 	} `json:"info"`
 	Vulnerabilities []HostVulnerability `json:"vulnerabilities"`
 }
