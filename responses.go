@@ -94,11 +94,18 @@ type ScanDetailsResp struct {
 		UserPerms     int64  `json:"user_permissions"`
 		Control       bool   `json:"control"`
 	} `json:"info"`
-	Hosts        []Host `json:"hosts"`
-	CompHosts    []Host `json:"comphosts"`
-	Notes        []Note `json:"notes"`
+	Hosts     []Host `json:"hosts"`
+	CompHosts []Host `json:"comphosts"`
+	Notes     struct {
+		Note []Note `json:"note"`
+		Type string `json:"type"`
+	} `json:"notes"`
 	Remediations struct {
-		Remediation Remediation `json:"remediation"`
+		Remediation       *Remediation `json:"remediation"`
+		NumHosts          int          `json:"num_hosts"`
+		NumCves           int          `json:"num_cves"`
+		NumImpactedHosts  int          `json:"num_impacted_hosts"`
+		NumRemediatedCves int          `json:"num_remediated_cves"`
 	} `json:"remediations"`
 	NumHosts          int64               `json:"num_hosts"`
 	NumCVEs           int64               `json:"num_cves"`

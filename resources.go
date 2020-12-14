@@ -67,6 +67,8 @@ type FilterControls struct {
 	ReadableRegex string   `json:"readable_regest"`
 	Regex         string   `json:"regex"`
 	Ooptions      []string `json:"options"`
+	Prefix        string   `json:"prefix"`
+	List          []string `json:"list"`
 }
 
 // Folders resources.

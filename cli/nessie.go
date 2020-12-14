@@ -42,23 +42,28 @@ func main() {
 		log.Println("Logged-in")
 		defer nessus.Logout()
 	}
+	nessus.SetVerbose(true)
 
 	var scanID int64 = 13
-	// We only care about the last scan, so no use for the scan UUID here.
-	if _, err = nessus.StartScan(scanID); err != nil {
+	//// We only care about the last scan, so no use for the scan UUID here.
+	//if _, err = nessus.StartScan(scanID); err != nil {
+	//	panic(err)
+	//}
+	//for {
+	//	details, err := nessus.ScanDetails(scanID, nil)
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	if strings.ToLower(details.Info.Status) == "completed" {
+	//		log.Println("Scan completed")
+	//		break
+	//	}
+	//	log.Println("Scan is", details.Info.Status)
+	//	time.Sleep(5 * time.Second)
+	//}
+
+	if _, err := nessus.ScanDetails(scanID, nil); err != nil {
 		panic(err)
-	}
-	for {
-		details, err := nessus.ScanDetails(scanID, nil)
-		if err != nil {
-			panic(err)
-		}
-		if strings.ToLower(details.Info.Status) == "completed" {
-			log.Println("Scan completed")
-			break
-		}
-		log.Println("Scan is", details.Info.Status)
-		time.Sleep(5 * time.Second)
 	}
 
 	exportID, err := nessus.ExportScan(scanID, nessie.ExportCSV)
