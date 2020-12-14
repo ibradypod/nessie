@@ -136,7 +136,7 @@ type ScanPluginOutput struct {
 			Severity         int    `json:"severity"`
 			PluginName       string `json:"pluginname"`
 			PluginFamily     string `json:"pluginfamily"`
-			PluginID         int64  `json:"pluginid"`
+			PluginID         string `json:"pluginid"`
 			PluginAttributes struct {
 				RiskInformation struct {
 					RiskFactor string `json:"risk_factor"`
