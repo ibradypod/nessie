@@ -100,14 +100,14 @@ type ScanDetailsResp struct {
 	Remediations struct {
 		Remediation Remediation `json:"remediation"`
 	} `json:"remediations"`
-	NumHosts          int64           `json:"num_hosts"`
-	NumCVEs           int64           `json:"num_cves"`
-	NumImpactedHosts  int64           `json:"num_impacted_hosts"`
-	NumRemediatedCVEs int64           `json:"num_remediated_cves"`
-	Vulnerabilities   []Vulnerability `json:"vulnerabilities"`
-	Compliance        []Vulnerability `json:"compliance"`
-	History           []History       `json:"history"`
-	Filters           []Filter        `json:"filters"`
+	NumHosts          int64               `json:"num_hosts"`
+	NumCVEs           int64               `json:"num_cves"`
+	NumImpactedHosts  int64               `json:"num_impacted_hosts"`
+	NumRemediatedCVEs int64               `json:"num_remediated_cves"`
+	Vulnerabilities   []HostVulnerability `json:"vulnerabilities"`
+	Compliance        []Vulnerability     `json:"compliance"`
+	History           []History           `json:"history"`
+	Filters           []Filter            `json:"filters"`
 }
 
 type tzResp struct {
