@@ -130,8 +130,8 @@ type HostScanDetailsResp struct {
 }
 
 type ScanPluginOutput struct {
-	Output []PluginOutput `json:"output"`
-	Info   struct {
+	Outputs []PluginOutput `json:"outputs"`
+	Info    struct {
 		PluginDescription struct {
 			Severity         int    `json:"severity"`
 			PluginName       string `json:"pluginname"`
