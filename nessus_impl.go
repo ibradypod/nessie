@@ -128,7 +128,12 @@ func (n *nessusImpl) Request(method string, resource string, js interface{}, wan
 	if err != nil {
 		return nil, err
 	}
-	u.Path = resource
+	if uri, err := url.ParseRequestURI(resource); err != nil {
+		return nil, err
+	} else {
+		u.Path = uri.Path
+		u.RawQuery = uri.RawQuery
+	}
 
 	var req *http.Request
 	if js != nil {
