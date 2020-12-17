@@ -760,6 +760,35 @@ func (n *nessusImpl) ScanPluginOutput(scanID int64, hostID int64, pluginID int64
 	return reply, nil
 }
 
+func (n *nessusImpl) ScanKbInfo(scanID int64, hostID int64) (*ScanHostKbInfo, error) {
+	if n.verbose {
+		logrus.Debug("Getting ScanKbInfo about a scan...")
+	}
+	var uri = fmt.Sprintf("/scans/%d/hosts/%d/kb/prepare", scanID, hostID)
+	resp, err := n.Request("GET", uri, nil, []int{http.StatusOK})
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	reply := &ScanHostKbPrepareResp{}
+	if err = json.NewDecoder(resp.Body).Decode(&reply); err != nil {
+		return nil, err
+	}
+	resp1, err := n.Request("GET", fmt.Sprintf("/tokens/%s/download", reply.Token), nil, []int{http.StatusOK})
+	if err != nil {
+		return nil, err
+	}
+	defer resp1.Body.Close()
+	content, err := ioutil.ReadAll(resp1.Body)
+	if err != nil {
+		return nil, err
+	}
+	reply1 := &ScanHostKbInfo{
+		Content: string(content),
+	}
+	return reply1, nil
+}
+
 func (n *nessusImpl) ConfigureScan(scanID int64, scanSetting NewScanRequest) (*Scan, error) {
 	if n.verbose {
 		logrus.Debug("Configuring a scan...")

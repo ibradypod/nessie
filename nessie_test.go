@@ -141,7 +141,7 @@ func TestMethods(t *testing.T) {
 		{nil, http.StatusOK, func(n Nessus) { n.ResumeScan(42) }},
 		{nil, http.StatusOK, func(n Nessus) { n.StopScan(42) }},
 		{nil, http.StatusOK, func(n Nessus) { n.DeleteScan(42) }},
-		{&ScanDetailsResp{}, http.StatusOK, func(n Nessus) { n.ScanDetails(42) }},
+		{&ScanDetailsResp{}, http.StatusOK, func(n Nessus) { n.ScanDetails(42, nil) }},
 		{[]TimeZone{}, http.StatusOK, func(n Nessus) { n.Timezones() }},
 		{[]Folder{}, http.StatusOK, func(n Nessus) { n.Folders() }},
 		{nil, http.StatusOK, func(n Nessus) { n.CreateFolder("name") }},

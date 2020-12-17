@@ -52,6 +52,7 @@ type Nessus interface {
 	ScanDetails(scanID int64, args url.Values) (*ScanDetailsResp, error)
 	HostScanDetails(scanID int64, hostID int64, args url.Values) (*HostScanDetailsResp, error)
 	ScanPluginOutput(scanID int64, hostID int64, pluginID int64) (*ScanPluginOutput, error)
+	ScanKbInfo(scanID int64, hostID int64) (*ScanHostKbInfo, error)
 	ConfigureScan(scanID int64, scanSetting NewScanRequest) (*Scan, error)
 
 	Timezones() ([]TimeZone, error)
